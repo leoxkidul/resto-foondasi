@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foonasi - Food Landing Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'MyFonts', 'Bangers', cursive;
+    }
+
+    @font-face {
+      font-family: 'MyFonts';
+      src: url('fonts/MyFonts.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #fff;
+      text-align: center;
+    }
+
+    /* Gaya dasar navbar */
+    /* Gaya dasar navbar */
+    .header {
+      background: #d62c2c;
+      padding: 15px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    /* Logo */
+    .logo img {
+      height: 55px;
+    }
+
+    /* Menu desktop */
+    .header nav ul {
+      list-style: none;
+      display: flex;
+      gap: 35px;
+      align-items: center;
+    }
+
+    .header nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 20px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .header nav ul li a:hover {
+      color: #ffcc00;
+    }
+
+    /* Tombol hamburger untuk mobile */
+    .hamburger {
+      display: none;
+      font-size: 28px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Responsive - Mobile Mode */
+    @media (max-width: 768px) {
+      .header {
+        padding: 15px 20px;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      /* Hidden menu */
+      #nav-menu {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: #d62c2c;
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        transition: height 0.3s ease;
+      }
+
+      #nav-menu ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      #nav-menu ul li {
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+      }
+
+      /* Saat menu aktif */
+      #nav-menu.active {
+        height: 250px;
+      }
+
+      #nav-menu.active ul {
+        opacity: 1;
+      }
+    }
+
+
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 50%;
+      background: #d62c2c;
+      top: 0;
+      border-bottom-left-radius: 50% 20%;
+      border-bottom-right-radius: 50% 20%;
+      z-index: -1;
+    }
+
+    .hero img {
+      width: 300px;
+      margin-top: 100px;
+      /* Atur sesuai kebutuhan */
+    }
+
+    .hero .title-img {
+      width: 450px;
+      margin: 20px 0;
+    }
+
+    .order-btn {
+      background: #d62c2c;
+      color: white;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    section {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    #about {
+      background: white;
+      background-size: cover;
+      color: #d62c2c;
+    }
+
+    .about-image {
+      text-align: center;
+      /* Supaya gambar berada di tengah */
+    }
+
+    .about-image img {
+      width: 50%;
+      /* Sesuaikan ukuran gambar */
+      max-width: 600px;
+      /* Batasi ukuran maksimum */
+      border-radius: 10px;
+      /* Tambahkan sudut melengkung agar lebih estetik */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      /* Tambahkan bayangan untuk efek elegan */
+    }
+
+
+
+    #menu {
+      text-align: center;
+      padding: 100px 5%;
+      background: white;
+      color: #d62c2c;
+    }
+
+    .menu-item h2 {
+      font-size: 18px;
+      margin-top: 10px;
+
+    }
+
+    .menu-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      justify-content: center;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .menu-item {
+      background: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-item img {
+      width: 100%;
+      max-width: 220px;
+      /* Gambar lebih besar */
+      height: auto;
+      border-radius: 10px;
+    }
+
+
+    .menu-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .menu-item h3 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .order-btn {
+      margin-top: 10px;
+      padding: 10px 15px;
+      font-size: 16px;
+      background: #d62c2c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .order-btn:hover {
+      background: #b92222;
+    }
+
+    /* ======== RESPONSIVE MENU ======== */
+    @media (max-width: 768px) {
+      .menu-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .menu-item {
+        padding: 15px;
+      }
+
+      .menu-item img {
+        max-width: 150px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .menu-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bestseller-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      background: white;
+      padding: 40px 5%;
+      border-radius: 10px;
+    }
+
+    .bestseller-img {
+      width: 350px;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .bestseller-content {
+      max-width: 500px;
+    }
+
+    .bestseller-content h2 {
+      font-size: 24px;
+      color: #d62c2c;
+      margin-bottom: 10px;
+    }
+
+    .bestseller-content p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .order-btn {
+      background: #d62c2c;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: 0.3s;
+    }
+
+    .order-btn:hover {
+      background: #b02424;
+      transform: scale(1.05);
+    }
+
+    /* ========== RESPONSIVE BEST SELLER ========== */
+    @media (max-width: 768px) {
+      .bestseller-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px;
+      }
+
+      .bestseller-img {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .bestseller-content {
+        max-width: 100%;
+      }
+
+      .order-btn {
+        width: 100%;
+      }
+    }
+
+    .order-btn:active {
+      transform: scale(0.95);
+    }
+
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      text-align: center;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+
+    .about h2 {
+      font-size: 40px;
+      color: #d62c2c;
+    }
+
+    .floating-elements img {
+      position: absolute;
+      width: 50px;
+      animation: floatAnimation 5s infinite ease-in-out;
+    }
+
+    .footer {
+
+      background: #d62c2c;
+      color: white;
+      padding: 40px 10%;
+    }
+
+    .footer-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 30px;
+    }
+
+    .footer-left {
+      max-width: 300px;
+      text-align: left;
+    }
+
+    .footer-left img {
+      width: 150px;
+    }
+
+    .footer-left p {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .footer-columns {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .footer-column {
+      flex: 1;
+      text-align: left;
+    }
+
+    .footer-column h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      font-weight: normal;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-column ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .footer-column ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-column p {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .footer-column i {
+      margin-right: 8px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .social-icons a {
+      color: white;
+      font-size: 22px;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #ffcc00;
+      transform: scale(1.2);
+    }
+
+    .footer-line {
+      width: 100%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      margin: 20px 0;
+    }
+
+    .footer-bottom {
+      font-size: 14px;
+      color: white;
+      text-align: center;
+    }
+
+    /* ========== RESPONSIVE FOOTER ========== */
+    @media (max-width: 768px) {
+      .footer-columns {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .footer-column {
+        text-align: left;
+      }
+    }
+
+
+    .floating-elements img {
+      position: absolute;
+      width: 50px;
+      cursor: grab;
+      animation: floatAnimation 3s infinite ease-in-out alternate;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    @keyframes floatAnimation {
+      0% {
+        transform: translateY(0px);
+      }
+
+      100% {
+        transform: translateY(-15px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="logo.png" alt="Foonasi Logo" />
+    </div>
+    <button class="hamburger" id="hamburger-btn">☰</button>
+    <nav id="nav-menu">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <section id="home" class="hero fade-in">
+    <img src="bestseller.png" alt="Foonasi" />
+    <img src="bgnama1.png" alt="Foonasi" class="title-img" />
+    <button class="order-btn" onclick="scrollToMenu()">Order Now</button>
+
+    <div class="floating-elements">
+      <img src="lombok.png" style="top: 20%; right: 10%" />
+      <img src="tomat.png" style="top: 32%; right: 18%" />
+      <img src="tomat1.png" style="top: 52%; right: 36%" />
+      <img src="lombok.png" style="top: 43%; right: 1%" />
+      <img src="lombok1.png" style="top: 55%; right: 15%" />
+      <img src="lombok2.png" style="top: 42%; left: 5%" />
+      <img src="lombok.png" style="top: 28%; left: 19%" />
+      <img src="lombok2.png" style="top: 58%; left: 15%" />
+      <img src="tomat1.png" style="top: 45%; left: 29%" />
+      <img src="tomat.png" style="top: 22%; left: 2%" />
+    </div>
+  </section>
+  <section id="about" class="about-us fade-in">
+    <h2 style="font-size: 2em; font-weight: bold" data-aos="fade-up">About Us</h2>
+    <br />
+    <p style="font-size: 1.3em" data-aos="fade-up" data-aos-delay="200">
+      Halo, kami Foondasi. Warung makan yang punya mimpi
+      <br />menjadi tempat memenuhi “pondasi” kita semua agar supaya
+      <br />tetap bahagia memulai pun mengakhiri padatnya hari-hari
+      <br />penuh urusan-urusan dan kesibukan yang entah di mana
+    </p>
+    <p style="font-size: 1.2em" data-aos="fade-up" data-aos-delay="400">
+      ujungnya itu.
+    </p>
+    <br />
+    <br />
+    <div class="about-image" data-aos="fade-up" data-aos-delay="600">
+      <img src="about.png" alt="Tentang Kami">
+    </div>
+  </section>
+
+
+  <section id="menu">
+    <h2 style="font-size: 2em; font-weight: bold" data-aos="fade-up">Our Menu</h2>
+    <div class="menu-container">
+      <div class="menu-item" data-aos="fade-up">
+        <img src="menu1.png" alt="Nasi Disiram Rempah" />
+        <h3>Nasi Disiram Rempah</h3>
+        <button class="order-btn" onclick="openModal('Nasi Disiram Rempah')">
+          Order Now
+        </button>
+      </div>
+      <div class="menu-item" data-aos="fade-up" data-aos-delay="200">
+        <img src="menu2.png" alt="Nasi Digoreng Aja" />
+        <h3>Nasi Digoreng Aja</h3>
+        <button class="order-btn" onclick="openModal('Nasi Digoreng Aja')">
+          Order Now
+        </button>
+      </div>
+      <div class="menu-item" data-aos="fade-up" data-aos-delay="400">
+        <img src="menu3.png" alt="Nasi Disiram Kare" />
+        <h3>Nasi Disiram Kare</h3>
+        <button class="order-btn" onclick="openModal('Nasi Disiram Kare')">
+          Order Now
+        </button>
+      </div>
+      <div class="menu-item" data-aos="fade-up" data-aos-delay="600">
+        <img src="menu4.png" alt="Minuman" />
+        <h3>Minuman</h3>
+        <button class="order-btn" onclick="openModal('Minuman')">
+          Order Now
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="bestseller-container" data-aos="fade-up">
+    <img src="menu1.png" alt="Best Seller" class="bestseller-img" data-aos="fade-up" />
+    <div class="bestseller-content" data-aos="fade-up">
+      <h2>🔥 Best Seller: Nasi Disiram Rempah + Paru Crispy</h2>
+      <p>
+        Menu paling favorit di warung! Cocok untuk yang baru pertama kali mampir dan bingung memilih.
+        Dijamin lezat dan bikin ketagihan! 😋
+      </p>
+      <button class="order-btn" onclick="openModal('Nasi Disiram Rempah')" data-aos="zoom-in">
+        Order Now
+      </button>
+    </div>
+  </div>
+
+
+  <div id="orderModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2 id="menuTitle">Pilih Topping</h2>
+      <label for="topping">Topping:</label>
+      <select id="topping" onchange="updatePrice()"></select>
+      <p>Total Harga: <span id="totalHarga">Rp0</span></p>
+      <button id="confirmOrder">Pesan Sekarang</button>
+    </div>
+  </div>
+
+  <script>
+    const menuToppings = {
+      "Nasi Disiram Rempah": [
+        { name: "Dikasih Ayam", price: 26000 },
+        { name: "Dikasih cumi", price: 30000 },
+        { name: "Dikasih Paru Crispy", price: 28000 },
+        { name: "Dikasih Daging", price: 28000 },
+      ],
+      "Nasi Digoreng Aja": [
+        { name: "Dikasih Ayam", price: 26000 },
+        { name: "Dikasih cumi", price: 30000 },
+        { name: "Dikasih Daging", price: 32000 },
+      ],
+      "Nasi Disiram Kare": [
+        { name: "Dikasih Ayam", price: 26000 },
+        { name: "Dikasih cumi", price: 28000 },
+        { name: "Dikasih Paru Crispy", price: 28000 },
+        { name: "Dikasih Daging", price: 28000 },
+      ],
+      Minuman: [
+        { name: "Mineral", price: 6000 },
+        { name: "Es Teh", price: 8000 },
+        { name: "Es Lemon", price: 10000 },
+        { name: "Soda Susu", price: 15000 },
+      ],
+    };
+
+    let selectedMenu = "";
+
+    function openModal(menuName) {
+      selectedMenu = menuName;
+      document.getElementById("menuTitle").textContent = menuName;
+
+      const toppingSelect = document.getElementById("topping");
+      toppingSelect.innerHTML = "";
+
+      menuToppings[menuName].forEach((topping) => {
+        const option = document.createElement("option");
+        option.value = topping.price;
+        option.textContent = `${topping.name} (+Rp${topping.price})`;
+        toppingSelect.appendChild(option);
+      });
+
+      basePrice = menuToppings[menuName][0].price;
+      document.getElementById("totalHarga").textContent = `Rp${basePrice}`;
+
+      document.getElementById("orderModal").style.display = "flex";
+    }
+
+    function updatePrice() {
+      const selectedPrice = parseInt(
+        document.getElementById("topping").value
+      );
+      document.getElementById(
+        "totalHarga"
+      ).textContent = `Rp${selectedPrice}`;
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+      const fadeElements = document.querySelectorAll(".fade-in");
+
+      function checkFadeIn() {
+        fadeElements.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.85) {
+            el.classList.add("show");
+          }
+        });
+      }
+      document.getElementById("hamburger-btn").addEventListener("click", function () {
+        document.getElementById("nav-menu").classList.toggle("active");
+      });
+
+
+      window.addEventListener("scroll", checkFadeIn);
+      checkFadeIn(); // Jalankan saat halaman pertama kali dimuat
+    });
+
+
+    document.querySelector(".close-btn").addEventListener("click", () => {
+      document.getElementById("orderModal").style.display = "none";
+    });
+
+    document.getElementById("confirmOrder").addEventListener("click", () => {
+      alert("Pesanan Anda telah diterima!");
+      document.getElementById("orderModal").style.display = "none";
+    });
+    document.querySelectorAll("nav ul li a").forEach((anchor) => {
+      anchor.addEventListener("click", function (event) {
+        event.preventDefault();
+        const targetId = this.getAttribute("href").substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80, // Sesuaikan dengan tinggi header
+            behavior: "smooth",
+          });
+        }
+      });
+    });
+    function scrollToMenu() {
+      document.getElementById("menu").scrollIntoView({ behavior: "smooth" });
+    }
+    document.querySelectorAll(".floating-elements img").forEach((img) => {
+      img.addEventListener("mousedown", function (e) {
+        let offsetX = e.clientX - img.getBoundingClientRect().left;
+        let offsetY = e.clientY - img.getBoundingClientRect().top;
+
+        function onMouseMove(event) {
+          img.style.left = event.clientX - offsetX + "px";
+          img.style.top = event.clientY - offsetY + "px";
+        }
+
+        function onMouseUp() {
+          document.removeEventListener("mousemove", onMouseMove);
+          document.removeEventListener("mouseup", onMouseUp);
+        }
+
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+      });
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000, // Durasi animasi dalam milidetik
+      once: false,
+    });
+  </script>
+
+
+  <footer id="contact" class="footer">
+    <div class="footer-top">
+      <div class="footer-left">
+        <img src="logoktk.png" alt="Foonasi Logo" />
+        <p>"Makan Pangkal Kenyang"</p>
+      </div>
+
+      <div class="footer-columns">
+        <div class="footer-column">
+          <h3>Informasi</h3>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">Tentang Kami</a></li>
+            <li><a href="#menu">Menu</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Kontak</h3>
+          <p><i class="fa-solid fa-phone"></i>+62 853-9909-3636</p>
+          <p><i class="fa-solid fa-envelope"></i>foondasi21@gmail.com</p>
+          <div class="social-icons">
+            <a href="https://www.instagram.com/foondasi?igsh=OG95cGNxOTdtaGU4"><i
+                class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@foondasi?_t=ZS-8v0UTJoXGid&_r=1"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://wa.me/6289679112141" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.524023928957!2d110.4141854745736!3d-7.187231671692313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e70f35ebc1b7e7b%3A0x30889b9b45062d41!2sWarung%20Makan%20Enak!5e0!3m2!1sen!2sid!4v1618585761239!5m2!1sen!2sid"
+            width="100%" height="200" style="border: 0" allowfullscreen="" loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-line"></div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Foonasi. All Rights Reserved.</p>
+    </div>
+  </footer>
+</body>
+
+</html>
